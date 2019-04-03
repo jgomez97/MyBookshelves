@@ -1,7 +1,9 @@
 package cs4330.cs.utep.mybookshelves.manager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Bookshelf implements Serializable {
 
@@ -12,16 +14,38 @@ public class Bookshelf implements Serializable {
     /** Used in order to store books. */
     private static HashMap<String, Book> books = new HashMap<String, Book>();
 
-    /** Constructor */
-    public Bookshelf() {
+
+    public List<Book> getBooksInArray() {
+        ArrayList<Book> list = new ArrayList<Book>();
+        for(Book book : books.values()) {
+            list.add(book);
+        }
+        return list;
     }
 
-    public Bookshelf(String name, long dateCreated, BookshelfType type) {
-        this.name = name;
-        this.dateCreated = dateCreated;
-        this.type = type;
+    public Book getBook(String bookTitle) {
+        return books.get(bookTitle);
     }
 
+    public boolean bookExists(String bookTitle) {
+        return books.containsKey(bookTitle);
+    }
+
+    public void addBook(String oldTitle, Book book) {
+        if(oldTitle.equalsIgnoreCase("new"))
+            books.put(book.getTitle(), book);
+        else
+            updateBook(oldTitle, book);
+    }
+
+    private void updateBook(String oldName, Book book) {
+        books.remove(oldName);
+        books.put(book.getTitle(), book);
+    }
+
+    public boolean isEmpty() {
+        return books.isEmpty();
+    }
 
 
     public int getNumBooks() {

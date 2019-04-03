@@ -35,7 +35,7 @@ public class BookshelvesManager implements Serializable {
     }
 
     public boolean bookshelfExists(String bookshelfName) {
-        return bookshelves.containsValue(bookshelfName);
+        return bookshelves.containsKey(bookshelfName);
     }
 
     public boolean isEmpty() {

@@ -9,16 +9,6 @@ public class Book implements Serializable {
     private long isbn, dateAdded;
     private double price;
 
-    /** Constructor */
-    public Book(String title, String author, int numPages, long isbn, long dateAdded, double price) {
-        this.title = title;
-        this.author = author;
-        this.numPages = numPages;
-        this.isbn = isbn;
-        this.dateAdded = dateAdded;
-        this.price = price;
-    }
-
     /** Getters */
 
     public String getTitle() {

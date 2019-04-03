@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,9 +16,11 @@ import cs4330.cs.utep.mybookshelves.utils.ListAdapterBookshelves;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BookshelvesManager manager = new BookshelvesManager();
+    /** Managers */
+    private static BookshelvesManager manager;
 
     private TextView mainTitle;
+
     private ListView bookshelves;
 
     @Override
@@ -24,13 +28,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-            if(getIntent().hasExtra("manager"))
-                manager = (BookshelvesManager) getIntent().getSerializableExtra("manager");
-            else
-                manager = new BookshelvesManager();
+        if(!getIntent().hasExtra("manager"))
+            manager = new BookshelvesManager();
 
         setUpComponents();
         updateList();
+
+        bookshelves.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                TextView bookShelfName = view.findViewById(R.id.bookshelfName);
+                String name = bookShelfName.getText().toString().replace("Name: ", "");
+                Intent intent = new Intent(view.getContext(), BookshelfActivity.class);
+                intent.putExtra("bookshelfName", manager.getBookshelf(name));
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -68,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
         bookshelves.setAdapter(new ListAdapterBookshelves(this, manager.getBookShelvesInArray()));
         if(manager.isEmpty())
             mainTitle.setText("Your Bookshelves: None");
+        else {
+            mainTitle.setText("Your Bookshelves:");
+        }
     }
 
     /**

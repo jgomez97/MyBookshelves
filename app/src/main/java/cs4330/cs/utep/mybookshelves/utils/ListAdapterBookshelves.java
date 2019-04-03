@@ -17,14 +17,12 @@ import cs4330.cs.utep.mybookshelves.manager.BookshelfType;
 public class ListAdapterBookshelves extends BaseAdapter {
 
     private static LayoutInflater inflater = null;
-    private Context context;
 
     /** List of all bookshelves. */
     private List<Bookshelf> bookshelves;
 
     /** Constructor */
     public ListAdapterBookshelves (Context context, List<Bookshelf> bookshelves) {
-        this.context = context;
         this.bookshelves = bookshelves;
         inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
     }

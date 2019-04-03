@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BookshelfActivity">
+
+    <TextView
+        android:id="@+id/bookshelfTitle"
+        android:layout_width="326dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="29dp"
+        android:text="Bookshelf Name"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <GridView
+        android:id="@+id/books_list"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:fastScrollEnabled="true"
+        android:gravity="center"
+        android:horizontalSpacing="25dp"
+        android:numColumns="2"
+        android:scrollingCache="false"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookshelfTitle" />
+</android.support.constraint.ConstraintLayout>
