@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BookEditor">
+
+    <EditText
+        android:id="@+id/bookPriceEditing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="Price"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/bookPriceLabel"
+        app:layout_constraintTop_toBottomOf="@+id/bookIsbnEditing" />
+
+    <TextView
+        android:id="@+id/bookPriceLabel"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:text="Price:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookIsbnLabel" />
+
+    <EditText
+        android:id="@+id/bookIsbnEditing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="ISBN"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/bookIsbnLabel"
+        app:layout_constraintTop_toBottomOf="@+id/bookNumberPagesEditing" />
+
+    <TextView
+        android:id="@+id/bookNumPagesLabel"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:text="Pages:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookAuthorLabel" />
+
+    <TextView
+        android:id="@+id/bookIsbnLabel"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:text="ISBN:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookNumPagesLabel" />
+
+    <EditText
+        android:id="@+id/bookNumberPagesEditing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="Number of Pages"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/bookNumPagesLabel"
+        app:layout_constraintTop_toBottomOf="@+id/bookAuthorEditing" />
+
+    <EditText
+        android:id="@+id/bookAuthorEditing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="Author"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/bookAuthorLabel"
+        app:layout_constraintTop_toBottomOf="@+id/bookTitleEditing" />
+
+    <TextView
+        android:id="@+id/bookAuthorLabel"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:text="Author:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookTitleLabel" />
+
+    <TextView
+        android:id="@+id/bookEditorTitle"
+        android:layout_width="222dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="94dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="94dp"
+        android:text="Add Book"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/bookTitleLabel"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="102dp"
+        android:text="Title:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/bookTitleEditing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="19dp"
+        android:ems="10"
+        android:hint="Book Title"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/bookTitleLabel"
+        app:layout_constraintTop_toBottomOf="@+id/bookEditorTitle" />
+
+    <Button
+        android:id="@+id/bookSaveBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="161dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="161dp"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookPriceEditing" />
+</android.support.constraint.ConstraintLayout>

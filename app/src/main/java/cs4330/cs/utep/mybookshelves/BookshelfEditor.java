@@ -61,14 +61,12 @@ public class BookshelfEditor extends AppCompatActivity {
             public void onClick(View view) {
                 if(!nameEditing.getText().toString().matches("")) {
                     if(radioGroup.getCheckedRadioButtonId() != -1) {
-                        if((!manager.bookshelfExists(nameEditing.getText().toString()) &&
-                                title.getText().toString().equals("Create Bookshelf")) ||
+                        if(!manager.bookshelfExists(nameEditing.getText().toString()) ||
                                 (title.getText().toString().equalsIgnoreCase("Edit Bookshelf") &&
-                                        bookshelf.getName().equals(title.getText().toString()))) {
+                                        bookshelf.getName().equals(nameEditing.getText().toString()))) {
                             saveBookshelf();
-                            Intent intent = new Intent();
-                            intent.putExtra("manager", manager);
-                            setResult(Activity.RESULT_OK, intent);
+                            getIntent().putExtra("manager", manager);
+                            setResult(Activity.RESULT_OK, getIntent());
                             finish();
                         } else {
                             nameEditing.setError("That name is taken by other bookshelf.");
