@@ -4,10 +4,26 @@ import java.io.Serializable;
 
 public class Book implements Serializable {
 
-    private String title, author;
+    private String title, author, bookshelfName;
     private int numPages;
     private long isbn, dateAdded;
     private double price;
+
+    /** Default Constructor */
+    public Book() {
+
+    }
+
+    public Book(String title, String author, String bookshelfName, int numPages,
+                long isbn, long dateAdded, double price) {
+        this.title = title;
+        this.author = author;
+        this.bookshelfName = bookshelfName;
+        this.numPages = numPages;
+        this.isbn = isbn;
+        this.dateAdded = dateAdded;
+        this.price = price;
+    }
 
     /** Getters */
 
@@ -17,6 +33,10 @@ public class Book implements Serializable {
 
     public String getAuthor() {
         return author;
+    }
+
+    public String getBookshelfName() {
+        return bookshelfName;
     }
 
     public int getNumPages() {
@@ -42,6 +62,10 @@ public class Book implements Serializable {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public void setBookshelfName(String bookshelfName) {
+        this.bookshelfName = bookshelfName;
     }
 
     public void setNumPages(int numPages) {

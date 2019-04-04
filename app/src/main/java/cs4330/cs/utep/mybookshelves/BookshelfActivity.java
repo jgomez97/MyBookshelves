@@ -18,18 +18,24 @@ import cs4330.cs.utep.mybookshelves.utils.ListAdapterBookshelves;
 public class BookshelfActivity extends AppCompatActivity {
 
     /** Managers */
+    private static BookshelvesManager manager;
     private static Bookshelf bookshelf;
 
     private TextView mainTitle;
 
     private GridView books;
 
+    private String oldBookshelfName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookshelf);
 
-        bookshelf = (Bookshelf) getIntent().getSerializableExtra("bookshelfName");
+        oldBookshelfName = getIntent().getStringExtra("bookshelfName");
+
+        manager = (BookshelvesManager) getIntent().getSerializableExtra("manager");
+        bookshelf = manager.getBookshelf(oldBookshelfName);
 
         setUpComponents();
         updateGrid();
@@ -61,6 +67,7 @@ public class BookshelfActivity extends AppCompatActivity {
         if(requestCode == 1) {
             if(resultCode == Activity.RESULT_OK) {
                 bookshelf = (Bookshelf) data.getSerializableExtra("bookshelf");
+                manager.addBookshelf(oldBookshelfName, bookshelf);
                 updateGrid();
             }
         }

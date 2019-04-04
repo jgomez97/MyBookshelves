@@ -30,7 +30,7 @@ public class ListAdapterBookshelf extends BaseAdapter {
         final View v = inflater.inflate(R.layout.book_element, null);
         TextView bookTitle = v.findViewById(R.id.bookTiltleElement);
         ImageView icon = v.findViewById(R.id.bookImageElement);
-        bookTitle.setText("Name: " + books.get(i).getTitle());
+        bookTitle.setText(books.get(i).getTitle());
         icon.setTag(i);
         return v;
     }

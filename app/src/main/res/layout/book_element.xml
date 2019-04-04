@@ -11,20 +11,20 @@
         android:layout_width="140dp"
         android:layout_height="127dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookTiltleElement"
         app:srcCompat="@drawable/book" />
 
     <TextView
         android:id="@+id/bookTiltleElement"
-        android:layout_width="95dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="11dp"
+        android:layout_width="139dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="Book Title"
         android:textAlignment="center"
-        android:textStyle="bold|italic"
+        android:textStyle="italic"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bookImageElement" />
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

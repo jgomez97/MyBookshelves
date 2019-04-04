@@ -28,8 +28,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(!getIntent().hasExtra("manager"))
-            manager = new BookshelvesManager();
+        if (!getIntent().hasExtra("manager")) {
+            manager = new BookshelvesManager(this);
+        }
 
         setUpComponents();
         updateList();
@@ -40,10 +41,17 @@ public class MainActivity extends AppCompatActivity {
                 TextView bookShelfName = view.findViewById(R.id.bookshelfName);
                 String name = bookShelfName.getText().toString().replace("Name: ", "");
                 Intent intent = new Intent(view.getContext(), BookshelfActivity.class);
-                intent.putExtra("bookshelfName", manager.getBookshelf(name));
+                intent.putExtra("bookshelfName", name);
+                intent.putExtra("manager", manager);
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateList();
     }
 
     @Override

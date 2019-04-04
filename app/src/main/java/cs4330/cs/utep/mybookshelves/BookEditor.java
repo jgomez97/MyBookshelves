@@ -90,6 +90,7 @@ public class BookEditor extends AppCompatActivity {
         book.setIsbn(Long.parseLong(isbnEditing.getText().toString()));
         book.setPrice(Double.parseDouble(priceEditing.getText().toString()));
         book.setDateAdded(System.currentTimeMillis() / 1000);
+        book.setBookshelfName(bookshelf.getName());
 
         bookshelf.addBook(bookTitle, book);
     }

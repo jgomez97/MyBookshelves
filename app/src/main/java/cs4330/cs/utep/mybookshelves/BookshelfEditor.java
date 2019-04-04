@@ -45,7 +45,7 @@ public class BookshelfEditor extends AppCompatActivity {
         manager = (BookshelvesManager) i.getSerializableExtra("manager");
         bookshelfName = i.getStringExtra("bookshelfName");
         if(bookshelfName.equalsIgnoreCase("new")) {
-            bookshelf = new Bookshelf();
+            bookshelf = new Bookshelf(manager.db);
             collection.setChecked(true);
         } else {
             bookshelf = manager.getBookshelf(bookshelfName);
