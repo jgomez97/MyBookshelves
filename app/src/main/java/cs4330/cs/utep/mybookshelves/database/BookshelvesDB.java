@@ -137,13 +137,19 @@ public class BookshelvesDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, null, new String[]{});
         db.close();
+    }*/
+
+    public void deleteBookshelf(String bookshelfName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(BOOKSHELVES_TABLE_NAME, COL_BOOKSHELF_NAME + " = ?", new String[] { bookshelfName } );
+        db.close();
     }
 
-    public void delete(String bookshelfName) {
+    public void deleteBook(String bookTitle) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, COL_BOOKSHELF_NAME + " = ?", new String[] { bookshelfName } );
+        db.delete(BOOKS_TABLE_NAME, COL_BOOK_TITLE + " = ?", new String[] { bookTitle } );
         db.close();
-    }*/
+    }
 
     public void updateBookshelf(String oldName, Bookshelf bookshelf) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -153,6 +159,14 @@ public class BookshelvesDB extends SQLiteOpenHelper {
         values.put(COL_BOOKSHELF_TYPE, bookshelf.getType() == BookshelfType.COLLECTION ? 1 : 0);
 
         db.update(BOOKSHELVES_TABLE_NAME, values, COL_BOOKSHELF_NAME + " = ?", new String[]{oldName});
+        db.close();
+    }
+
+    public void transferBook(String bookTitle, String newBookshelfTitle) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_BOOK_BOOKSHELF, newBookshelfTitle);
+        db.update(BOOKS_TABLE_NAME, values, COL_BOOK_TITLE + " = ?", new String[]{bookTitle});
         db.close();
     }
 

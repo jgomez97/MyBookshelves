@@ -1,15 +1,22 @@
 package cs4330.cs.utep.mybookshelves;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import cs4330.cs.utep.mybookshelves.manager.BookshelvesManager;
 import cs4330.cs.utep.mybookshelves.utils.ListAdapterBookshelves;
@@ -23,13 +30,21 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView bookshelves;
 
+    private MenuItem editor;
+
+    private static boolean editMode = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        registerReceiver(mBroadcastReceiver, new IntentFilter("adapter.answer"));
+
         if (!getIntent().hasExtra("manager")) {
             manager = new BookshelvesManager(this);
+        } else {
+            manager = (BookshelvesManager) getIntent().getSerializableExtra("manager");
         }
 
         setUpComponents();
@@ -57,6 +72,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        editor = menu.findItem(R.id.mainMenuItem2);
+        if(manager.isEmpty()) {
+            editor.setVisible(false);
+            editor.setEnabled(false);
+        } else {
+            editor.setVisible(true);
+            editor.setEnabled(true);
+        }
+
         return true;
     }
 
@@ -68,6 +92,11 @@ public class MainActivity extends AppCompatActivity {
                 i.putExtra("manager", manager);
                 i.putExtra("bookshelfName", "new");
                 startActivityForResult(i, 1);
+                break;
+            case R.id.mainMenuItem2:
+                editMode = editMode ? false : true;
+                editor.setTitle(editMode ? "Exit Editor" : "Bookshelves Editor");
+                updateList();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -86,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateList() {
-        bookshelves.setAdapter(new ListAdapterBookshelves(this, manager.getBookShelvesInArray()));
+        bookshelves.setAdapter(new ListAdapterBookshelves(this, editMode, manager));
         if(manager.isEmpty())
             mainTitle.setText("Your Bookshelves: None");
         else {
@@ -101,4 +130,16 @@ public class MainActivity extends AppCompatActivity {
         mainTitle = findViewById(R.id.mainTitle);
         bookshelves = findViewById(R.id.bookshelvesList);
     }
+
+
+    BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            manager = (BookshelvesManager) intent.getSerializableExtra("manager");
+            updateList();
+            Log.d("DEBUG", "Testing?");
+        }
+    };
+
 }

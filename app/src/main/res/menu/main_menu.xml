@@ -4,4 +4,9 @@
     <item
         android:id="@+id/mainMenuItem1"
         android:title="Add New Bookshelf"></item>
+    <item
+        android:id="@+id/mainMenuItem2"
+        android:checkable="false"
+        android:title="Edit Bookshelves"
+        android:visible="true"></item>
 </menu>

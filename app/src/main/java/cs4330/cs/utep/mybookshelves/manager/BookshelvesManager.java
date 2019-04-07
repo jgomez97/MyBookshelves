@@ -56,6 +56,9 @@ public class BookshelvesManager implements Serializable {
     }
 
     private void updateBookshelf(String oldName, Bookshelf bookshelf) {
+        List<Book> books = db.getAllBooks(oldName);
+        for(Book book : books)
+            db.transferBook(book.getTitle(), bookshelf.getName());
         bookshelves.remove(oldName);
         bookshelves.put(bookshelf.getName(), bookshelf);
         db.updateBookshelf(oldName, bookshelf);
@@ -63,6 +66,13 @@ public class BookshelvesManager implements Serializable {
 
     public boolean bookshelfExists(String bookshelfName) {
         return bookshelves.containsKey(bookshelfName);
+    }
+
+    public void deleteBookshelf(String bookshelfName) {
+        List<Book> books = db.getAllBooks(bookshelfName);
+        for(Book book : books)
+            db.deleteBook(book.getTitle());
+
     }
 
     public boolean isEmpty() {
