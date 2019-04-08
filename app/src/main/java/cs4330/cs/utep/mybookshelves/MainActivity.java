@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,16 +40,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        registerReceiver(mBroadcastReceiver, new IntentFilter("adapter.answer"));
-
         if (!getIntent().hasExtra("manager")) {
             manager = new BookshelvesManager(this);
         } else {
             manager = (BookshelvesManager) getIntent().getSerializableExtra("manager");
         }
 
+
+
         setUpComponents();
         updateList();
+        //allows to use context menu
+        registerForContextMenu(bookshelves);
 
         bookshelves.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -83,6 +86,36 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+    /**
+     * Allows to create a context menu.
+     * */
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Choose your option");
+        getMenuInflater().inflate(R.menu.contextmenu_bookshelf, menu);
+    }
+    /***
+     *Options on context menu. The context menu allows user to select a specific item and delete it.
+     * list is updated after item is deleted
+     */
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info  = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.delete_item_option:
+                manager.deleteBookshelf(manager.getBookShelvesInArray().get(info.position).getName());
+                updateList();
+
+                Toast.makeText(this, "Item deleted.", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+
+
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -130,16 +163,4 @@ public class MainActivity extends AppCompatActivity {
         mainTitle = findViewById(R.id.mainTitle);
         bookshelves = findViewById(R.id.bookshelvesList);
     }
-
-
-    BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            manager = (BookshelvesManager) intent.getSerializableExtra("manager");
-            updateList();
-            Log.d("DEBUG", "Testing?");
-        }
-    };
-
 }

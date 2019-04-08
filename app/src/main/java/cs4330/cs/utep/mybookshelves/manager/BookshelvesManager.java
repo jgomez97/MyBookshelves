@@ -72,7 +72,8 @@ public class BookshelvesManager implements Serializable {
         List<Book> books = db.getAllBooks(bookshelfName);
         for(Book book : books)
             db.deleteBook(book.getTitle());
-
+        bookshelves.remove(bookshelfName);
+        db.deleteBookshelf(bookshelfName);
     }
 
     public boolean isEmpty() {

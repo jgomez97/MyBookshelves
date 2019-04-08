@@ -4,11 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import cs4330.cs.utep.mybookshelves.manager.Bookshelf;
 import cs4330.cs.utep.mybookshelves.manager.BookshelvesManager;
@@ -39,6 +44,9 @@ public class BookshelfActivity extends AppCompatActivity {
 
         setUpComponents();
         updateGrid();
+
+        //allows to use context menu
+        registerForContextMenu(books);
     }
 
     @Override
@@ -46,6 +54,47 @@ public class BookshelfActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.bookshelf_menu, menu);
         return true;
     }
+    /**
+     * Allows to create a context menu.
+     * */
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Choose your option");
+        getMenuInflater().inflate(R.menu.contextmenu_books, menu);
+    }
+    /**
+     * Allows to create a context menu.
+     * */
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int viewToEditID;
+        String viewToEditName;
+        AdapterView.AdapterContextMenuInfo info  = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.delete_item_option_books:
+                bookshelf.deleteBook(bookshelf.getBooksInArray().get(info.position).getTitle());
+                updateGrid();
+                Toast.makeText(this, "Item deleted.", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.edit_item_option_books:
+                String name = bookshelf.getBooksInArray().get(info.position).getTitle();
+
+                Intent  i = new Intent(this,BookEditor.class);
+                i.putExtra("bookName", name);
+                i.putExtra("bookshelf", bookshelf);
+                startActivityForResult(i, 1);
+                return true;
+
+            default:
+                return super.onContextItemSelected(item);
+
+        }
+        // return super.onOptionsItemSelected(item);
+
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

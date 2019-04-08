@@ -54,7 +54,10 @@ public class Bookshelf implements Serializable {
             updateBook(oldTitle, book);
         }
     }
-
+    public void deleteBook(String bookName){
+        books.remove(bookName);
+        db.deleteBook(bookName);
+    }
     private void updateBook(String oldName, Book book) {
         books.remove(oldName);
         books.put(book.getTitle(), book);
