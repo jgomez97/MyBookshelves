@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cs4330.cs.utep.mybookshelves">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BookEditor"></activity>
+        <activity
+            android:name=".BookLookup"
+            android:label="@string/title_activity_book_lookup"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".BookEditor" />
         <activity android:name=".BookshelfActivity" />
         <activity android:name=".BookshelfEditor" />
         <activity android:name=".MainActivity">

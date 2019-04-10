@@ -100,9 +100,8 @@ public class BookshelfActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.bookshelfMenuItem1:
-                Intent i = new Intent(this, BookEditor.class);
+                Intent i = new Intent(this, BookLookup.class);
                 i.putExtra("bookshelf", bookshelf);
-                i.putExtra("bookName", "new");
                 startActivityForResult(i, 1);
                 break;
             default:
