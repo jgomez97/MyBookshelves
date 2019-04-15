@@ -4,4 +4,7 @@
     <item
         android:id="@+id/bookshelfMenuItem1"
         android:title="Add New Book"></item>
+    <item
+        android:id="@+id/bookshelfMenuItem2"
+        android:title="Scan barcode"></item>
 </menu>

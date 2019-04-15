@@ -15,6 +15,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.vision.barcode.Barcode;
+
 import cs4330.cs.utep.mybookshelves.manager.Bookshelf;
 import cs4330.cs.utep.mybookshelves.manager.BookshelvesManager;
 import cs4330.cs.utep.mybookshelves.utils.ListAdapterBookshelf;
@@ -104,6 +107,10 @@ public class BookshelfActivity extends AppCompatActivity {
                 i.putExtra("bookshelf", bookshelf);
                 startActivityForResult(i, 1);
                 break;
+            case R.id.bookshelfMenuItem2:
+                Intent intent = new Intent(this, ScanBarcodeActivity.class);
+                startActivityForResult(intent,0);
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -117,6 +124,16 @@ public class BookshelfActivity extends AppCompatActivity {
                 bookshelf = (Bookshelf) data.getSerializableExtra("bookshelf");
                 manager.addBookshelf(oldBookshelfName, bookshelf);
                 updateGrid();
+            }
+        } else if(requestCode == 0) {
+            if(resultCode == CommonStatusCodes.SUCCESS){
+                if(data != null){
+                    Barcode barcode = data.getParcelableExtra("barcode");
+                    Intent i = new Intent(this, BookLookup.class);
+                    i.putExtra("bookshelf", bookshelf);
+                    i.putExtra("isbn", barcode.displayValue);
+                    startActivityForResult(i, 1);
+                }
             }
         }
     }

@@ -3,6 +3,7 @@
     package="cs4330.cs.utep.mybookshelves">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -11,12 +12,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode" />
+
+        <activity
+            android:name=".ScanBarcodeActivity"
+            android:label="Scan Barcode" />
         <activity
             android:name=".BookLookup"
             android:label="@string/title_activity_book_lookup"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".BookEditor" />
-        <activity android:name=".BookshelfActivity" />
+        <activity
+            android:name=".BookshelfActivity"
+            android:label="Barcode Reader">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".BookshelfEditor" />
         <activity android:name=".MainActivity">
             <intent-filter>
