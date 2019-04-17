@@ -13,6 +13,17 @@ import cs4330.cs.utep.mybookshelves.manager.Book;
 import cs4330.cs.utep.mybookshelves.manager.Bookshelf;
 import cs4330.cs.utep.mybookshelves.manager.BookshelfType;
 
+/**
+ * @author Jesus Gomez
+ *
+ * Class that handles the database of the app.
+ *
+ * Class: CS4330
+ * Instructor: Dr. Cheon
+ * Assignment: Final project
+ * Date of last modification: 04/17/2019
+ **/
+
 public class BookshelvesDB extends SQLiteOpenHelper {
 
     /** Information */
@@ -30,7 +41,10 @@ public class BookshelvesDB extends SQLiteOpenHelper {
     public static final String COL_BOOK_NUMPAGES = "Book_NumPages";
     public static final String COL_BOOK_ISBN = "Book_Isbn";
     public static final String COL_BOOK_DATE = "Book_Date";
-    public static final String COL_BOOK_PRICE = "Book_Price";
+    public static final String COL_BOOK_IMGURL = "Book_Img";
+    public static final String COL_BOOK_LANGUAGE = "Book_Language";
+    public static final String COL_BOOK_PUBLISHED_DATE = "Book_Published_Date";
+    public static final String COL_BOOK_RATING = "Book_Rating";
 
     /** Constructor */
     public BookshelvesDB(Context context){
@@ -52,7 +66,10 @@ public class BookshelvesDB extends SQLiteOpenHelper {
                 + COL_BOOK_NUMPAGES + " INTEGER, "
                 + COL_BOOK_ISBN + " BIGINTEGER, "
                 + COL_BOOK_DATE + " INTEGER, "
-                + COL_BOOK_PRICE + " DECIMAL " + ")";
+                + COL_BOOK_IMGURL + " STRING, "
+                + COL_BOOK_LANGUAGE + " STRING, "
+                + COL_BOOK_PUBLISHED_DATE + " INTEGER, "
+                + COL_BOOK_RATING + " DECIMAL " + ")";
         db.execSQL(table);
     }
 
@@ -65,6 +82,11 @@ public class BookshelvesDB extends SQLiteOpenHelper {
         onCreate(database);
     }
 
+    /**
+     * Adds a bookshelf into the database.
+     *
+     * @param bookshelf the bookshelf that is being added.
+     * */
     public void addBookshelf(Bookshelf bookshelf) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -75,6 +97,11 @@ public class BookshelvesDB extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * Adds a book into the database.
+     *
+     * @param book the book that is being added.
+     * */
     public void addBook(Book book) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -84,11 +111,19 @@ public class BookshelvesDB extends SQLiteOpenHelper {
         values.put(COL_BOOK_NUMPAGES, book.getNumPages());
         values.put(COL_BOOK_ISBN, book.getIsbn());
         values.put(COL_BOOK_DATE, book.getDateAdded());
-        values.put(COL_BOOK_PRICE, book.getPrice());
+        values.put(COL_BOOK_IMGURL, book.getImgURL());
+        values.put(COL_BOOK_LANGUAGE, book.getLanguage());
+        values.put(COL_BOOK_PUBLISHED_DATE, book.getPublishedDate());
+        values.put(COL_BOOK_RATING, book.getRating());
         db.insert(BOOKS_TABLE_NAME, null, values);
         db.close();
     }
 
+    /**
+     * Gets a list of all the bookshelves from the database.
+     *
+     * @return the list of all bookshelves in the database.
+     * */
     public List<Bookshelf> getAllBookshelves() {
         List<Bookshelf> bookshelves = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + BOOKSHELVES_TABLE_NAME;
@@ -108,6 +143,12 @@ public class BookshelvesDB extends SQLiteOpenHelper {
         return bookshelves;
     }
 
+    /**
+     * Gets all the books from a certain bookshelve that are in the database.
+     *
+     * @param  bookshelfName The name of the bookshelf we are looking for.
+     * @return               the list of all books in the database.
+     * */
     public List<Book> getAllBooks(String bookshelfName) {
         List<Book> books = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + BOOKS_TABLE_NAME + " WHERE " + COL_BOOK_BOOKSHELF + " = ?";
@@ -122,9 +163,12 @@ public class BookshelvesDB extends SQLiteOpenHelper {
                     int numPages = cursor.getInt(3);
                     long isbn = cursor.getLong(4);
                     long date = cursor.getLong(5);
-                    double price = cursor.getDouble(6);
+                    String imgURL = cursor.getString(6);
+                    String language = cursor.getString(7);
+                    int publishedDate = cursor.getInt(8);
+                    double rating = cursor.getDouble(9);
 
-                    Book book = new Book(title, author, bookBookshelfName, numPages, isbn, date, price);
+                    Book book = new Book(title, author, bookBookshelfName, numPages, isbn, date, imgURL, publishedDate, rating, language);
                     books.add(book);
                 } while (cursor.moveToNext());
             }
@@ -133,24 +177,33 @@ public class BookshelvesDB extends SQLiteOpenHelper {
     }
 
     /**
-    public void deleteAll() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, null, new String[]{});
-        db.close();
-    }*/
-
+     * Deletes a bookshelf from the database.
+     *
+     * @param  bookshelfName The name of the bookshelf we are trying to delete.
+     * */
     public void deleteBookshelf(String bookshelfName) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(BOOKSHELVES_TABLE_NAME, COL_BOOKSHELF_NAME + " = ?", new String[] { bookshelfName } );
         db.close();
     }
 
+    /**
+     * Deletes a book from the database.
+     *
+     * @param  bookTitle The title of the book that we are trying to delete.
+     * */
     public void deleteBook(String bookTitle) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(BOOKS_TABLE_NAME, COL_BOOK_TITLE + " = ?", new String[] { bookTitle } );
         db.close();
     }
 
+    /**
+     * Updates a bookshelf that already exists on the database.
+     *
+     * @param  oldName   The name that the bookshelf used to have.
+     * @param  bookshelf The bookshelf that we are are going to update.
+     * */
     public void updateBookshelf(String oldName, Bookshelf bookshelf) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -162,28 +215,41 @@ public class BookshelvesDB extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void transferBook(String bookTitle, String newBookshelfTitle) {
+    /**
+     * Updates a book that already exists on the database.
+     *
+     * @param  oldTitle The title that the book used to have.
+     * @param  book     The book that we are are going to update.
+     * */
+    public void updateBook(String oldTitle, Book book) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COL_BOOK_BOOKSHELF, newBookshelfTitle);
-        db.update(BOOKS_TABLE_NAME, values, COL_BOOK_TITLE + " = ?", new String[]{bookTitle});
-        db.close();
-    }
-
-    public void updateBook(String oldName, Book book) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
         values.put(COL_BOOK_TITLE, book.getTitle());
         values.put(COL_BOOK_AUTHOR, book.getAuthor());
         values.put(COL_BOOK_BOOKSHELF, book.getBookshelfName());
         values.put(COL_BOOK_NUMPAGES, book.getNumPages());
         values.put(COL_BOOK_ISBN, book.getIsbn());
         values.put(COL_BOOK_DATE, book.getDateAdded());
-        values.put(COL_BOOK_PRICE, book.getPrice());
+        values.put(COL_BOOK_IMGURL, book.getImgURL());
+        values.put(COL_BOOK_LANGUAGE, book.getLanguage());
+        values.put(COL_BOOK_PUBLISHED_DATE, book.getPublishedDate());
+        values.put(COL_BOOK_RATING, book.getRating());
 
-        db.update(BOOKS_TABLE_NAME, values, COL_BOOK_TITLE + " = ?", new String[]{oldName});
+        db.update(BOOKS_TABLE_NAME, values, COL_BOOK_TITLE + " = ?", new String[]{oldTitle});
         db.close();
     }
 
+    /**
+     * Transfers a book into another bookshelf.
+     *
+     * @param  bookTitle        The title of the book that is being transferred.
+     * @param  newBookshelfName The name of the bookshelf that the book is being transferred into.
+     * */
+    public void transferBook(String bookTitle, String newBookshelfName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_BOOK_BOOKSHELF, newBookshelfName);
+        db.update(BOOKS_TABLE_NAME, values, COL_BOOK_TITLE + " = ?", new String[]{bookTitle});
+        db.close();
+    }
 }

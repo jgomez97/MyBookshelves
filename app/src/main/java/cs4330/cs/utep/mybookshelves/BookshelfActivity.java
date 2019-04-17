@@ -20,8 +20,21 @@ import com.google.android.gms.vision.barcode.Barcode;
 
 import cs4330.cs.utep.mybookshelves.manager.Bookshelf;
 import cs4330.cs.utep.mybookshelves.manager.BookshelvesManager;
+import cs4330.cs.utep.mybookshelves.utils.CustomDialog;
 import cs4330.cs.utep.mybookshelves.utils.ListAdapterBookshelf;
 import cs4330.cs.utep.mybookshelves.utils.ListAdapterBookshelves;
+
+/**
+ * @author Jesus Gomez & Brian Cardiel
+ *
+ * Activity responsable for displaying the books that
+ * a bookshelf contains.
+ *
+ * Class: CS4330
+ * Instructor: Dr. Cheon
+ * Assignment: Final project
+ * Date of last modification: 04/17/2019
+ **/
 
 public class BookshelfActivity extends AppCompatActivity {
 
@@ -29,10 +42,9 @@ public class BookshelfActivity extends AppCompatActivity {
     private static BookshelvesManager manager;
     private static Bookshelf bookshelf;
 
+    /** Components */
     private TextView mainTitle;
-
     private GridView books;
-
     private String oldBookshelfName;
 
     @Override
@@ -41,15 +53,19 @@ public class BookshelfActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bookshelf);
 
         oldBookshelfName = getIntent().getStringExtra("bookshelfName");
-
         manager = (BookshelvesManager) getIntent().getSerializableExtra("manager");
         bookshelf = manager.getBookshelf(oldBookshelfName);
 
         setUpComponents();
         updateGrid();
-
-        //allows to use context menu
         registerForContextMenu(books);
+
+        books.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                new CustomDialog(view.getContext(), bookshelf.getBooksInArray().get(i));
+            }
+        });
     }
 
     @Override
@@ -57,22 +73,16 @@ public class BookshelfActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.bookshelf_menu, menu);
         return true;
     }
-    /**
-     * Allows to create a context menu.
-     * */
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.setHeaderTitle("Choose your option");
         getMenuInflater().inflate(R.menu.contextmenu_books, menu);
     }
-    /**
-     * Allows to create a context menu.
-     * */
+
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        int viewToEditID;
-        String viewToEditName;
         AdapterView.AdapterContextMenuInfo info  = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.delete_item_option_books:
@@ -80,24 +90,17 @@ public class BookshelfActivity extends AppCompatActivity {
                 updateGrid();
                 Toast.makeText(this, "Item deleted.", Toast.LENGTH_SHORT).show();
                 return true;
-
             case R.id.edit_item_option_books:
                 String name = bookshelf.getBooksInArray().get(info.position).getTitle();
-
                 Intent  i = new Intent(this,BookEditor.class);
                 i.putExtra("bookName", name);
                 i.putExtra("bookshelf", bookshelf);
                 startActivityForResult(i, 1);
                 return true;
-
             default:
                 return super.onContextItemSelected(item);
-
         }
-        // return super.onOptionsItemSelected(item);
-
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -138,7 +141,9 @@ public class BookshelfActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Updates the gridview by re-setting the adapter.
+     * */
     private void updateGrid() {
         books.setAdapter(new ListAdapterBookshelf(this, bookshelf.getBooksInArray()));
         mainTitle.setText(bookshelf.getName());

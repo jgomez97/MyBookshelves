@@ -29,8 +29,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".BookEditor" />
         <activity
-            android:name=".BookshelfActivity"
-            android:label="Barcode Reader">
+            android:name=".BookshelfActivity">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

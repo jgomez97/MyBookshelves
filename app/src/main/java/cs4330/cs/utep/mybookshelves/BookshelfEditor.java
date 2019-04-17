@@ -14,24 +14,33 @@ import cs4330.cs.utep.mybookshelves.manager.Bookshelf;
 import cs4330.cs.utep.mybookshelves.manager.BookshelfType;
 import cs4330.cs.utep.mybookshelves.manager.BookshelvesManager;
 
+/**
+ * @author Jesus Gomez
+ *
+ * Activity responsable for creating/editing
+ * bookshelves and saving them into the manager.
+ *
+ * Class: CS4330
+ * Instructor: Dr. Cheon
+ * Assignment: Final project
+ * Date of last modification: 04/17/2019
+ **/
+
 public class BookshelfEditor extends AppCompatActivity {
 
     /** Managers */
     private BookshelvesManager manager;
+
+    /** Object being edited. */
     private Bookshelf bookshelf;
 
-    /** TextViews */
+    /** Components */
     private TextView title, nameEditing;
-
-    /** Radio Group */
     private RadioGroup radioGroup;
-
-    /** Radio Buttons */
     private RadioButton wishlist, collection;
-
-    /** Button */
     private Button saveBtn;
 
+    /** Global Variables*/
     private String bookshelfName;
 
     @Override
@@ -59,32 +68,31 @@ public class BookshelfEditor extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!nameEditing.getText().toString().matches("")) {
-                    if(radioGroup.getCheckedRadioButtonId() != -1) {
-                        if(!manager.bookshelfExists(nameEditing.getText().toString()) ||
+            if(!nameEditing.getText().toString().matches("")) {
+                if(radioGroup.getCheckedRadioButtonId() != -1) {
+                    if(!manager.bookshelfExists(nameEditing.getText().toString()) ||
                                 (title.getText().toString().equalsIgnoreCase("Edit Bookshelf") &&
                                         bookshelf.getName().equals(nameEditing.getText().toString()))) {
-                            saveBookshelf();
-                            getIntent().putExtra("manager", manager);
-                            setResult(Activity.RESULT_OK, getIntent());
-                            finish();
-                        } else {
-                            nameEditing.setError("That name is taken by other bookshelf.");
-                        }
+                        saveBookshelf();
+                        getIntent().putExtra("manager", manager);
+                        setResult(Activity.RESULT_OK, getIntent());
+                        finish();
+                    } else {
+                        nameEditing.setError("That name is taken by other bookshelf.");
                     }
-                } else {
-                    nameEditing.setError("The name field cannot be empty.");
                 }
+            } else {
+                nameEditing.setError("The name field cannot be empty.");
+            }
             }
         });
     }
 
-
+    /**
+     * Saves the bookshelf that was recently created into the manager.
+     * */
     private void saveBookshelf() {
-        if(wishlist.isChecked())
-            bookshelf.setType(BookshelfType.WISHLIST);
-        else
-            bookshelf.setType(BookshelfType.COLLECTION);
+        bookshelf.setType((wishlist.isChecked() ? BookshelfType.WISHLIST : BookshelfType.COLLECTION));
         bookshelf.setName(nameEditing.getText().toString());
         bookshelf.setDateCreated(System.currentTimeMillis() / 1000);
         manager.addBookshelf(bookshelfName, bookshelf);

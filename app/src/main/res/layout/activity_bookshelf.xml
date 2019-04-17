@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/bookshelfTitle"
-        android:layout_width="326dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="29dp"
         android:layout_marginTop="33dp"
@@ -25,6 +25,7 @@
         android:id="@+id/books_list"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginTop="12dp"
         android:fastScrollEnabled="true"
         android:gravity="center"
         android:horizontalSpacing="25dp"

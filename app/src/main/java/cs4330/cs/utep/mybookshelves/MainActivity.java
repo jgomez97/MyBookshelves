@@ -1,20 +1,14 @@
 package cs4330.cs.utep.mybookshelves;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,17 +16,29 @@ import android.widget.Toast;
 import cs4330.cs.utep.mybookshelves.manager.BookshelvesManager;
 import cs4330.cs.utep.mybookshelves.utils.ListAdapterBookshelves;
 
+/**
+ * @author Jesus Gomez & Brian Cardiel
+ *
+ * MainActivy class, where main components/objects
+ * and funcionalities of the app can be found.
+ *
+ * Class: CS4330
+ * Instructor: Dr. Cheon
+ * Assignment: Final project
+ * Date of last modification: 04/17/2019
+ **/
+
 public class MainActivity extends AppCompatActivity {
 
     /** Managers */
     private static BookshelvesManager manager;
 
+    /** Components */
     private TextView mainTitle;
-
     private ListView bookshelves;
-
     private MenuItem editor;
 
+    /** Global Variables */
     private static boolean editMode = false;
 
     @Override
@@ -40,17 +46,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (!getIntent().hasExtra("manager")) {
+        if(!getIntent().hasExtra("manager")) {
             manager = new BookshelvesManager(this);
         } else {
             manager = (BookshelvesManager) getIntent().getSerializableExtra("manager");
         }
 
-
-
         setUpComponents();
         updateList();
-        //allows to use context menu
         registerForContextMenu(bookshelves);
 
         bookshelves.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -83,22 +86,16 @@ public class MainActivity extends AppCompatActivity {
             editor.setVisible(true);
             editor.setEnabled(true);
         }
-
         return true;
     }
-    /**
-     * Allows to create a context menu.
-     * */
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.setHeaderTitle("Choose your option");
         getMenuInflater().inflate(R.menu.contextmenu_bookshelf, menu);
     }
-    /***
-     *Options on context menu. The context menu allows user to select a specific item and delete it.
-     * list is updated after item is deleted
-     */
+
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info  = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
@@ -106,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.delete_item_option:
                 manager.deleteBookshelf(manager.getBookShelvesInArray().get(info.position).getName());
                 updateList();
-
                 Toast.makeText(this, "Item deleted.", Toast.LENGTH_SHORT).show();
                 return true;
             default:
@@ -115,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -147,6 +142,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Updates the listview by re-setting the adapter and the main title
+     * of the activity, depending on the content stored on the manager.
+     * */
     private void updateList() {
         bookshelves.setAdapter(new ListAdapterBookshelves(this, editMode, manager));
         if(manager.isEmpty())

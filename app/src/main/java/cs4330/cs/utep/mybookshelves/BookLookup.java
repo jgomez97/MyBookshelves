@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.JsonReader;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,20 +24,34 @@ import cs4330.cs.utep.mybookshelves.manager.Book;
 import cs4330.cs.utep.mybookshelves.manager.Bookshelf;
 import cs4330.cs.utep.mybookshelves.utils.JsonHandler;
 
+/**
+ * @author Jesus Gomez
+ *
+ * Activity responsable for obtaining a isbn and
+ * validating it in order to add the book.
+ *
+ * Contains a private class which is reponsable for
+ * obtaining the JSON that is given by GoogleBooksAPI
+ *
+ * Class: CS4330
+ * Instructor: Dr. Cheon
+ * Assignment: Final project
+ * Date of last modification: 04/17/2019
+ **/
+
 public class BookLookup extends AppCompatActivity {
 
+    /** Managers */
     private Bookshelf bookshelf;
     private Book book;
 
-    /** TextView */
+    /** Components */
     private TextView lookupISBN;
-
-    /** Button */
     private Button searchBtn;
 
-    /** Strings */
+    /** Global Variables */
     String isbn = "", link = "", text = "";
-    final private String key = "AIzaSyDeCpmRGZA0nTEgle1DUUq-RHLt9P8iwfU";
+    final private String key = "AIzaSyDeCpmRGZA0nTEgle1DUUq-RHLt9P8iwfU"; //Key used by GoogleBooksAPI
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,21 +70,22 @@ public class BookLookup extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!lookupISBN.getText().toString().matches("")) {
-                    if (lookupISBN.getText().toString().length() == 13) {
-                        isbn = lookupISBN.getText().toString();
-                        link = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn + "&key=" + key;
-                        new GoogleApiRequest().execute();
-                    } else {
-                        lookupISBN.setError("Please make sure you are introducing the full ISBN (13 characters) of the book.");
-                    }
+            if (!lookupISBN.getText().toString().matches("")) {
+                if (lookupISBN.getText().toString().length() == 13) {
+                    isbn = lookupISBN.getText().toString();
+                    link = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn + "&key=" + key;
+                    new GoogleApiRequest().execute();
                 } else {
-                    lookupISBN.setError("The isbn field cannot be empty.");
+                    lookupISBN.setError("Please make sure you are introducing the full ISBN (13 characters) of the book.");
                 }
+            } else {
+                lookupISBN.setError("The isbn field cannot be empty.");
+            }
             }
         });
     }
 
+    /** Class used to request a connection to the GoogleBooksAPI and retrieve the json given.*/
     private class GoogleApiRequest extends AsyncTask<Void,Void,Void> {
 
         @Override
@@ -108,11 +121,9 @@ public class BookLookup extends AppCompatActivity {
                 this.cancel(true);
             } else {
                 book.setIsbn(Long.parseLong(lookupISBN.getText().toString()));
-                book.setPrice(1.99);
                 book.setBookshelfName(bookshelf.getName());
                 JsonHandler reader = new JsonHandler(text, book);
                 book = reader.getBookData();
-
                 bookshelf.addBook("new", book);
                 getIntent().putExtra("bookshelf", bookshelf);
                 setResult(Activity.RESULT_OK, getIntent());
@@ -121,6 +132,13 @@ public class BookLookup extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks if the book is on the API by reading the JSON
+     * file and determining its format.
+     *
+     * @return true if information about the book is
+     * found, otherwise false.
+     * */
     private boolean bookIsOnAPI() {
         try {
             JSONObject jObject = new JSONObject(text);

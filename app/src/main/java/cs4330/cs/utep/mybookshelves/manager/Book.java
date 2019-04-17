@@ -2,31 +2,45 @@ package cs4330.cs.utep.mybookshelves.manager;
 
 import java.io.Serializable;
 
+/**
+ * @author Jesus Gomez
+ *
+ * Class that stores all the information
+ * of a book.
+ *
+ * Class: CS4330
+ * Instructor: Dr. Cheon
+ * Assignment: Final project
+ * Date of last modification: 04/17/2019
+ **/
+
 public class Book implements Serializable {
 
-    private String title, author, bookshelfName;
-    private int numPages;
+    /** Variables */
+    private String title, author, bookshelfName, imgURL, language;
+    private int numPages, publishedDate;
+    private double rating;
     private long isbn, dateAdded;
-    private double price;
 
-    /** Default Constructor */
-    public Book() {
-
-    }
+    /** Constructors */
+    public Book() {}
 
     public Book(String title, String author, String bookshelfName, int numPages,
-                long isbn, long dateAdded, double price) {
+                long isbn, long dateAdded, String imgURL, int publishedDate,
+                double rating, String language) {
         this.title = title;
         this.author = author;
         this.bookshelfName = bookshelfName;
         this.numPages = numPages;
         this.isbn = isbn;
         this.dateAdded = dateAdded;
-        this.price = price;
+        this.imgURL = imgURL;
+        this.publishedDate = publishedDate;
+        this.rating = rating;
+        this.language = language;
     }
 
     /** Getters */
-
     public String getTitle() {
         return title;
     }
@@ -39,6 +53,22 @@ public class Book implements Serializable {
         return bookshelfName;
     }
 
+    public String getImgURL() {
+        return imgURL;
+    }
+
+    public int getPublishedDate() {
+        return  publishedDate;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
     public int getNumPages() {
         return numPages;
     }
@@ -49,10 +79,6 @@ public class Book implements Serializable {
 
     public long getDateAdded() {
         return dateAdded;
-    }
-
-    public double getPrice() {
-        return price;
     }
 
     /** Setters */
@@ -80,7 +106,19 @@ public class Book implements Serializable {
         this.dateAdded = dateAdded;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setImgURL(String imgURL) {
+        this.imgURL = imgURL;
+    }
+
+    public void setPublishedDate(int publishedDate) {
+        this.publishedDate = publishedDate;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

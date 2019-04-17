@@ -1,7 +1,6 @@
 package cs4330.cs.utep.mybookshelves.utils;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -9,33 +8,46 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import 	android.app.AlertDialog;
 
 import java.util.List;
 
 import cs4330.cs.utep.mybookshelves.BookshelfActivity;
 import cs4330.cs.utep.mybookshelves.BookshelfEditor;
-import cs4330.cs.utep.mybookshelves.MainActivity;
 import cs4330.cs.utep.mybookshelves.R;
 import cs4330.cs.utep.mybookshelves.manager.Bookshelf;
 import cs4330.cs.utep.mybookshelves.manager.BookshelfType;
 import cs4330.cs.utep.mybookshelves.manager.BookshelvesManager;
 
+/**
+ * @author Jesus Gomez
+ *
+ * BaseAdapter responsable for handling
+ * the ListView that is displayed in the MainActivity.
+ * @see cs4330.cs.utep.mybookshelves.MainActivity
+ *
+ * Class: CS4330
+ * Instructor: Dr. Cheon
+ * Assignment: Final project
+ * Date of last modification: 04/17/2019
+ **/
+
 public class ListAdapterBookshelves extends BaseAdapter {
 
+    /** Manager */
     private BookshelvesManager manager;
 
+    /** Components Used by the adapter*/
     private static LayoutInflater inflater = null;
-    private CalendarUtil dateUtil = new CalendarUtil();
+    private Context context;
+
+    /** Utils */
+    CalendarUtil dateUtil = new CalendarUtil();
 
     /** List of all bookshelves. */
     private List<Bookshelf> bookshelves;
 
-    private Boolean editMode;
-
-    private Context context;
+    private boolean editMode;
 
     /** Constructor */
     public ListAdapterBookshelves (Context context, boolean editMode, BookshelvesManager manager) {
@@ -109,5 +121,4 @@ public class ListAdapterBookshelves extends BaseAdapter {
     public long getItemId(int i) {
         return 0;
     }
-
 }

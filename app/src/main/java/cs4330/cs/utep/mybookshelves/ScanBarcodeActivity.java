@@ -4,15 +4,11 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.CameraSource;
@@ -21,6 +17,18 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+
+/**
+ * @author Brian Cardiel
+ *
+ * Activity responsable for scanning
+ * barcodes and their ISBN.
+ *
+ * Class: CS4330
+ * Instructor: Dr. Cheon
+ * Assignment: Final project
+ * Date of last modification: 04/17/2019
+ **/
 
 public class ScanBarcodeActivity extends AppCompatActivity {
 
@@ -31,31 +39,21 @@ public class ScanBarcodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_barcode);
-
-        cameraPreview = (SurfaceView) findViewById(R.id.camera_preview);
-        createcamerasource();
-
+        cameraPreview = findViewById(R.id.camera_preview);
+        createCameraSource();
     }
 
-    private void createcamerasource() {
+    private void createCameraSource() {
         BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this).build();
         final CameraSource cameraSource = new CameraSource.Builder(this, barcodeDetector)
                 .setAutoFocusEnabled(true)
                 .setRequestedPreviewSize(1600, 1024)
                 .build();
         cameraPreview.getHolder().addCallback(new SurfaceHolder.Callback() {
-
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
 
                 if (ActivityCompat.checkSelfPermission(ScanBarcodeActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
                     ActivityCompat.requestPermissions(ScanBarcodeActivity.this, new String[]{Manifest.permission.CAMERA},
                             MY_PERMISSION_REQUEST_CAMERA);
                     return;
@@ -75,10 +73,10 @@ public class ScanBarcodeActivity extends AppCompatActivity {
                 cameraSource.stop();
             }
         });
+
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-
             }
 
             @Override
@@ -93,5 +91,4 @@ public class ScanBarcodeActivity extends AppCompatActivity {
             }
         });
     }
-
 }

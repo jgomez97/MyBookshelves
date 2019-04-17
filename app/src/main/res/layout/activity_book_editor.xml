@@ -7,24 +7,72 @@
     tools:context=".BookEditor">
 
     <EditText
-        android:id="@+id/bookPriceEditing"
+        android:id="@+id/bookRatingEditing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="11dp"
         android:layout_marginTop="12dp"
         android:ems="10"
-        android:hint="Price"
+        android:hint="Rating"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toEndOf="@+id/bookRatingLabel"
+        app:layout_constraintTop_toBottomOf="@+id/bookPublishedDateEditing" />
+
+    <TextView
+        android:id="@+id/bookRatingLabel"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="33dp"
+        android:text="Rating:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookPublishedDateLabel" />
+
+    <EditText
+        android:id="@+id/bookPublishedDateEditing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="Published Year"
         android:inputType="number"
-        app:layout_constraintStart_toEndOf="@+id/bookPriceLabel"
+        app:layout_constraintStart_toEndOf="@+id/bookPublishedDateLabel"
+        app:layout_constraintTop_toBottomOf="@+id/bookLangEditing" />
+
+    <TextView
+        android:id="@+id/bookPublishedDateLabel"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="33dp"
+        android:text="Year:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookLangLabel" />
+
+    <EditText
+        android:id="@+id/bookLangEditing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="Language"
+        android:inputType="text"
+        app:layout_constraintStart_toEndOf="@+id/bookLangLabel"
         app:layout_constraintTop_toBottomOf="@+id/bookIsbnEditing" />
 
     <TextView
-        android:id="@+id/bookPriceLabel"
-        android:layout_width="65dp"
+        android:id="@+id/bookLangLabel"
+        android:layout_width="85dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
-        android:text="Price:"
+        android:layout_marginTop="30dp"
+        android:text="Language:"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +92,7 @@
 
     <TextView
         android:id="@+id/bookNumPagesLabel"
-        android:layout_width="65dp"
+        android:layout_width="85dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="36dp"
@@ -56,7 +104,7 @@
 
     <TextView
         android:id="@+id/bookIsbnLabel"
-        android:layout_width="65dp"
+        android:layout_width="85dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="36dp"
@@ -92,7 +140,7 @@
 
     <TextView
         android:id="@+id/bookAuthorLabel"
-        android:layout_width="65dp"
+        android:layout_width="85dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="36dp"
@@ -119,7 +167,7 @@
 
     <TextView
         android:id="@+id/bookTitleLabel"
-        android:layout_width="65dp"
+        android:layout_width="85dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="102dp"
@@ -150,6 +198,7 @@
         android:layout_marginEnd="161dp"
         android:text="Save"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bookPriceEditing" />
+        app:layout_constraintTop_toBottomOf="@+id/bookRatingEditing" />
 </android.support.constraint.ConstraintLayout>
