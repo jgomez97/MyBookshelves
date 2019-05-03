@@ -77,7 +77,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Wishlist"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#ffff"/>
 
         <RadioButton
             android:id="@+id/collectionRadioBtn"
@@ -85,7 +86,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Collection"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#ffff"/>
     </RadioGroup>
 
     <Button
@@ -96,6 +98,7 @@
         android:layout_marginTop="54dp"
         android:layout_marginEnd="161dp"
         android:text="Save"
+        android:background="#AA8347"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bookshelfEditorRGroup" />

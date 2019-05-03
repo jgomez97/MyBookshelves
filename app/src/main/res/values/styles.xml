@@ -3,9 +3,19 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">#3f2a14</item>       <!-- Action bar color. -->
+        <item name="colorPrimaryDark">@android:color/transparent</item>       <!-- bar with time -->
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:editTextColor">#ffff</item>
+        <item name="android:textColorPrimary">#000</item> <!-- textbox text-->
+        <item name="android:textColorSecondary">#ffff</item> <!-- radio buttons-->
+        <item name="android:textColorTertiary">#ffffff</item> <!--  title color - -->
+        <item name="android:textColorPrimaryInverse">#cec7</item>
+        <item name="android:textColorSecondaryInverse">#ff18</item>
+        <item name="android:textColorTertiaryInverse">#df47747f</item>
+        <item name="android:windowBackground">@mipmap/background2</item>
+        
     </style>
 
     <style name="AppTheme.NoActionBar">

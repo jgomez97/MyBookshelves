@@ -51,7 +51,7 @@ public class BookLookup extends AppCompatActivity {
 
     /** Global Variables */
     String isbn = "", link = "", text = "";
-    final private String key = "AIzaSyDeCpmRGZA0nTEgle1DUUq-RHLt9P8iwfU"; //Key used by GoogleBooksAPI
+    final private String key = "AIzaSyANM6lGyUqtQSFWgpGaF2ls5Reikt0dDE8"; //Key used by GoogleBooksAPI
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
