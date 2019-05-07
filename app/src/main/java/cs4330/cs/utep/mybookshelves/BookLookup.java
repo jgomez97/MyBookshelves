@@ -51,7 +51,7 @@ public class BookLookup extends AppCompatActivity {
 
     /** Global Variables */
     String isbn = "", link = "", text = "";
-    final private String key = "AIzaSyANM6lGyUqtQSFWgpGaF2ls5Reikt0dDE8"; //Key used by GoogleBooksAPI
+    final private String key = "AIzaSyBN7re7UnWBZzIxSS0PZMqh98c7_QMhSqE"; //Key used by GoogleBooksAPI
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +124,7 @@ public class BookLookup extends AppCompatActivity {
                 book.setBookshelfName(bookshelf.getName());
                 JsonHandler reader = new JsonHandler(text, book);
                 book = reader.getBookData();
+                book.setDateAdded(System.currentTimeMillis() / 1000);
                 bookshelf.addBook("new", book);
                 getIntent().putExtra("bookshelf", bookshelf);
                 setResult(Activity.RESULT_OK, getIntent());

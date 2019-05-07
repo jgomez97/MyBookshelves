@@ -33,6 +33,7 @@ public class CustomDialog {
 
     /** Constructor */
     public CustomDialog(Context context, Book book) {
+        //final Dialog dialog = new Dialog(context, R.style.CDialog_Style);
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_custom);
 

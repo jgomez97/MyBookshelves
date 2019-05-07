@@ -15,7 +15,7 @@
         <item name="android:textColorSecondaryInverse">#ff18</item>
         <item name="android:textColorTertiaryInverse">#df47747f</item>
         <item name="android:windowBackground">@mipmap/background2</item>
-        
+
     </style>
 
     <style name="AppTheme.NoActionBar">

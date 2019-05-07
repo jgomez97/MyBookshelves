@@ -55,6 +55,7 @@ public class BookshelfEditor extends AppCompatActivity {
         bookshelfName = i.getStringExtra("bookshelfName");
         if(bookshelfName.equalsIgnoreCase("new")) {
             bookshelf = new Bookshelf(manager.db);
+            bookshelf.setDateCreated(System.currentTimeMillis() / 1000);
             collection.setChecked(true);
         } else {
             bookshelf = manager.getBookshelf(bookshelfName);
@@ -94,7 +95,6 @@ public class BookshelfEditor extends AppCompatActivity {
     private void saveBookshelf() {
         bookshelf.setType((wishlist.isChecked() ? BookshelfType.WISHLIST : BookshelfType.COLLECTION));
         bookshelf.setName(nameEditing.getText().toString());
-        bookshelf.setDateCreated(System.currentTimeMillis() / 1000);
         manager.addBookshelf(bookshelfName, bookshelf);
     }
 
