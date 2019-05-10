@@ -21,11 +21,9 @@
             android:value="barcode" />
 
         <activity
-            android:name=".ScanBarcodeActivity"
-            android:label="Scan Barcode" />
+            android:name=".ScanBarcodeActivity"/>
         <activity
             android:name=".BookLookup"
-            android:label="@string/title_activity_book_lookup"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".BookEditor" />
         <activity
